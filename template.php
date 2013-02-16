@@ -692,3 +692,43 @@ function zen_mark($variables) {
     return ' <mark class="updated">' . t('updated') . '</mark>';
   }
 }
+
+/**
+ * Override Pane Header in Panels.
+ */
+function zen_preprocess_pane_header(&$vars) {
+  $vars['title'] = drupal_get_title();
+  $vars['front_page'] = url();
+  $vars['logo'] = theme_get_setting('logo');
+  $vars['site_name'] = (theme_get_setting('toggle_name') ? filter_xss_admin(variable_get('site_name', 'Drupal')) : '');
+  $vars['site_slogan'] = (theme_get_setting('toggle_slogan') ? filter_xss_admin(variable_get('site_slogan', '')) : '');
+  //$vars['secondary_menu'] = menu_secondary_menu();
+  $vars['secondary_menu'] = theme('links__system_secondary_menu', array(
+    'links' => $vars['secondary_menu'],
+    'attributes' => array('id' => 'secondary-menu', 'class' => array('links', 'clearfix', 'inline')),
+    'heading' => array('text' => 'Secondary menu', 'level' => 'h2', 'class' => array('element-invisible'))
+  ));
+}
+
+/**
+ * Override Pane Messages in Panels.
+ */
+function zen_preprocess_pane_messages(&$vars) {
+  $vars['breadcrumb'] = theme('breadcrumb', array('breadcrumb' => drupal_get_breadcrumb()));
+  $vars['messages'] = theme('status_messages');
+  $vars['tabs'] = menu_local_tabs();
+  $vars['help'] = theme('help');
+  $vars['action_links'] = menu_local_actions();
+}
+
+/**
+ * Override Pane Navigation in Panels.
+ */
+function zen_preprocess_pane_navigation(&$vars) {
+  //$vars['main_menu'] = menu_main_menu();
+  $vars['main_menu'] = theme('links__system_main_menu', array(
+    'links' => $vars['main_menu'],
+    'attributes' => array('id' => 'main-menu', 'class' => array('links', 'clearfix', 'inline')),
+    'heading' => array('text' => t('Main menu'), 'level' => 'h2', 'class' => array('element-invisible'))
+  ));
+}

@@ -32,3 +32,6 @@ settings[zen_html5_respond_meta][] = html5
 settings[zen_html5_respond_meta][] = meta
 settings[zen_rebuild_registry]     = 0
 settings[zen_wireframes]           = 0
+
+; Add support for Panels Everywhere Page template
+plugins[panels][layouts] = layouts
